@@ -19,8 +19,11 @@
         </div>
         <div class="row" style="height:2em;"></div>
         <div class="row">
-            <div class="col-sm">
-                <h2 id="output" style="color:#ff8c00;">Output example </h2>
+            <div class="col-md">
+                <h2 id="output" style="color:#ff8c00;">Output example</h2>
+            </div>
+            <div class="col-md">
+                <p>To help with copy &amp; paste: <input type="text" value="" name="" id="output_code"/> </p>
             </div>
         </div>
         <div class="row" style="height:2em;"></div>
@@ -98,6 +101,7 @@
     <script>
         const formElement = document.querySelector('#categories');
         const output = document.querySelector('#output');
+        const output_code = document.querySelector('#output_code');
 
         formElement.addEventListener('change', updateValue);
 
@@ -115,6 +119,7 @@
                 name = name + "__" + clean(formElement.elements['audience'].value)
             }
             output.textContent = name;
+            output_code.value = name;
         }
 
         updateValue()
