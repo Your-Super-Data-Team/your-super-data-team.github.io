@@ -9,6 +9,12 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <title>Your Super Ad Name Helper</title>
+    <style>
+        .output {
+            text-indent:1em;
+            color:#ff8c00;
+        }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -21,19 +27,21 @@
         <div class="row">
             <div class="col-md">
                 <p>Campaign Name</p>
-                <h2 id="output" style="text-indent:1em; color:#ff8c00;">Output example</h2>
+                <h2 id="output" class="output">Output example</h2>
             </div>
-            <div class="col-md">
-                <p><input type="text" value="" name="" id="output_code"/> </p>
+            <div class="col-md output_code">
+                <p>For Copy &amp; Paste</p>
+                <input type="text" value="" name="" id="output_code"/>
             </div>
         </div>
         <div class="row" id="row_adgroup" hidden>
             <div class="col-md">
                 <p>Ad Group</p>
-                <h2 id="output_adgroup", style ="text-indent:1em; color:#ff8c00;"> Adgroup </h2>
+                <h2 id="output_adgroup" class="output"> Adgroup </h2>
             </div>
-            <div class="col-md">
-                <p><input type="text" value="" name="" id="output_code_adgroup"/> </p>
+            <div class="col-md output_code">
+                <p>For Copy &amp; Paste</p>
+                <p class=""><input type="text" value="" name="" id="output_code_adgroup"/> </p>
             </div>
         </div>
         <div class="row" style="height:2em;"></div>
@@ -97,7 +105,7 @@
             <div class="row">
                 <div class="col-sm">
                     <div class="mb-3">
-                        <label for="productCategory" class="form-label">Product Category (Multiple words will be combined :) )</label>
+                        <label for="productCategory" class="form-label">Product Category</label>
                         <input type="text" class="form-control" id="productCategory">
                     </div>
                 </div>
@@ -107,6 +115,12 @@
                         <input type="text" class="form-control" id="audience">
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <p>Multiple words will be combined in a CamelCase style. :)</p>
+                </div>
+                <div class="col-sm"></div>
             </div>
             </form>
         </div>
@@ -158,7 +172,7 @@
             } else if (formElement.elements['productCategory'].value) {
                 name_adgroup = name_adgroup + clean(formElement.elements['productCategory'].value)
             } else if (formElement.elements['audience'].value) {
-                name_adgroup = name_adgroup + "__" + clean(formElement.elements['audience'].value)
+                name_adgroup = name_adgroup + "_" + clean(formElement.elements['audience'].value)
             }
             if (name_adgroup.length > 0) {
                 row_adgroup.hidden = false;
