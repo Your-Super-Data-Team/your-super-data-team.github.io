@@ -20,16 +20,27 @@
         <div class="row" style="height:2em;"></div>
         <div class="row">
             <div class="col-md">
-                <h2 id="output" style="color:#ff8c00;">Output example</h2>
+                <p>Campaign Name</p>
+                <h2 id="output" style="text-indent:1em; color:#ff8c00;">Output example</h2>
             </div>
             <div class="col-md">
-                <p>To help with copy &amp; paste: <input type="text" value="" name="" id="output_code"/> </p>
+                <p><input type="text" value="" name="" id="output_code"/> </p>
+            </div>
+        </div>
+        <div class="row" id="row_adgroup" hidden>
+            <div class="col-md">
+                <p>Ad Group</p>
+                <h2 id="output_adgroup", style ="text-indent:1em; color:#ff8c00;"> Adgroup </h2>
+            </div>
+            <div class="col-md">
+                <p><input type="text" value="" name="" id="output_code_adgroup"/> </p>
             </div>
         </div>
         <div class="row" style="height:2em;"></div>
         <div class="row">
-            <div class="col-sm">
-                <form id="categories">
+            <form id="categories">
+            <div class="row">
+                <div class="col-sm">
                     <div class="mb-3">
                         <label for="channel" class="form-label">Channel</label>
                         <select class="form-select" aria-label="Channel Selector" name="Ad channel" id="channel">
@@ -42,6 +53,9 @@
                             <option value="Influencer">Influencer</option>
                         </select>
                     </div>
+                    <!-- <button type="submit" class="btn btn&#45;primary">Submit</button> -->
+                </div>
+                <div class="col-sm">
                     <div class="mb-3">
                         <label for="region" class="form-label">Region</label>
                         <select class="form-select" aria-label="Channel Selector" id="region">
@@ -50,6 +64,10 @@
                             <option value="DE">Germany</option>
                         </select>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
                     <div class="mb-3">
                         <label for="platform" class="form-label">Platform</label>
                         <select class="form-select" aria-label="Channel Selector" id="platform">
@@ -62,6 +80,8 @@
                             <option value="TT">TikTok</option>
                         </select>
                     </div>
+                </div>
+                <div class="col-sm">
                     <div class="mb-3">
                         <label for="tactic" class="form-label">Tactic</label>
                         <select class="form-select" aria-label="Channel Selector" id="tactic">
@@ -72,18 +92,25 @@
                             <option value="B">Branded</option>
                         </select>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
                     <div class="mb-3">
-                        <label for="productCategory" class="form-label">Product Category</label>
+                        <label for="productCategory" class="form-label">Product Category (Multiple words will be combined :) )</label>
                         <input type="text" class="form-control" id="productCategory">
                     </div>
+                </div>
+                <div class="col-sm">
                     <div class="mb-3">
                         <label for="audience" class="form-label">Audience</label>
                         <input type="text" class="form-control" id="audience">
                     </div>
-                  <!-- <button type="submit" class="btn btn&#45;primary">Submit</button> -->
-                </form>
+                </div>
             </div>
+            </form>
         </div>
+        <div style="height:5em;"></div>
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
@@ -103,6 +130,10 @@
         const output = document.querySelector('#output');
         const output_code = document.querySelector('#output_code');
 
+        const row_adgroup = document.querySelector('#row_adgroup');
+        const output_adgroup = document.querySelector('#output_adgroup');
+        const output_code_adgroup = document.querySelector('#output_code_adgroup');
+
         formElement.addEventListener('change', updateValue);
 
         function clean(given_string) {
@@ -120,6 +151,22 @@
             }
             output.textContent = name;
             output_code.value = name;
+
+            var name_adgroup = ``;
+            if (formElement.elements['productCategory'].value && formElement.elements['audience'].value) {
+                name_adgroup = name_adgroup + clean(formElement.elements['productCategory'].value) + "_" + clean(formElement.elements['audience'].value)
+            } else if (formElement.elements['productCategory'].value) {
+                name_adgroup = name_adgroup + clean(formElement.elements['productCategory'].value)
+            } else if (formElement.elements['audience'].value) {
+                name_adgroup = name_adgroup + "__" + clean(formElement.elements['audience'].value)
+            }
+            if (name_adgroup.length > 0) {
+                row_adgroup.hidden = false;
+            } else if (name_adgroup.length == 0) {
+                row_adgroup.hidden = true;
+            }
+            output_adgroup.textContent = name_adgroup;
+            output_code_adgroup.value = name_adgroup;
         }
 
         updateValue()
