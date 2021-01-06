@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <title>Your Super Ad Name Helper</title>
+    <style>
+        .output {
+            text-indent:1em;
+            color:#ff8c00;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+        <div class="row page-header" style="margin-top:2em;">
+            <div class="col-sm">
+                <h1>Your Super Ad Naming Helper</h1>
+            </div>
+        </div>
+        <div class="row" style="height:2em;"></div> <!-- spacer -->
+        <div class="row"> <!-- campaign name -->
+            <div class="col-md">
+                <p>Campaign Name</p>
+                <h2 id="output" class="output">Output example</h2>
+            </div>
+            <div class="col-md output_code">
+                <p>For Copy &amp; Paste</p>
+                <input type="text" value="" name="" id="output_code"/>
+            </div>
+        </div>
+        <div class="row" id="row_adgroup" hidden> <!-- ad group name -->
+            <div class="col-md">
+                <p>Ad Group</p>
+                <h2 id="output_adgroup" class="output"> Adgroup </h2>
+            </div>
+            <div class="col-md output_code">
+                <p>For Copy &amp; Paste</p>
+                <p class=""><input type="text" value="" name="" id="output_code_adgroup"/> </p>
+            </div>
+            <div class="alert alert-info" role="alert">
+                This is a short format for new ad groups. You don't need to rename old ad groups / ad sets just yet.
+            </div>
+        </div>
+        <div id="row_utm" class="row">
+            <div class="col-md">
+                <!-- <p>Link with UTM Tags</p> -->
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea1">Link with UTM Tags</label>
+                  <textarea class="form-control" id="output_code_utm" rows="2"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="height:2em;"></div>
+        <div class="row">
+            <form id="categories">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="channel" class="form-label">Channel</label>
+                        <select class="form-select" aria-label="Channel Selector" name="Ad channel" id="channel">
+                            <option value="PaidSocial">Paid Social</option>
+                            <option value="PaidSearch">Paid Search</option>
+                            <option value="Video">Video</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Affiliate">Affiliate</option>
+                            <option value="Display">Display</option>
+                            <option value="Influencer">Influencer</option>
+                        </select>
+                    </div>
+                    <!-- <button type="submit" class="btn btn&#45;primary">Submit</button> -->
+                </div>
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="region" class="form-label">Region</label>
+                        <select class="form-select" aria-label="Channel Selector" id="region">
+                            <option value="US">United States</option>
+                            <option value="EU">European Union</option>
+                            <option value="DE">Germany</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="platform" class="form-label">Platform</label>
+                        <select class="form-select" aria-label="Channel Selector" id="platform">
+                            <option value="FB">Facebook</option>
+                            <option value="GOOGL">Google</option>
+                            <option value="BNG">Bing</option>
+                            <option value="YT">YouTube</option>
+                            <option value="PIN">Pinterest</option>
+                            <option value="Criteo">Criteo</option>
+                            <option value="TT">TikTok</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="tactic" class="form-label">Tactic</label>
+                        <select class="form-select" aria-label="Channel Selector" id="tactic">
+                            <option value="PROS">Prospecting</option>
+                            <option value="RET">Retargeting</option>
+                            <option value="Mixed">Mixed</option>
+                            <option value="NB">Non-Branded</option>
+                            <option value="B">Branded</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="productCategory" class="form-label">Product Category</label>
+                        <input type="text" class="form-control" id="productCategory">
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="audience" class="form-label">Audience</label>
+                        <input type="text" class="form-control" id="audience">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <p>Multiple words will be combined in a CamelCase style. :)</p>
+                </div>
+                <div class="col-sm"></div>
+            </div>
+            </form>
+        </div>
+        <div style="height:5em;"></div>
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="js/lodash.min.js"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+
+    <script>
+        const formElement = document.querySelector('#categories');
+        const output = document.querySelector('#output');
+        const output_code = document.querySelector('#output_code');
+
+        const row_adgroup = document.querySelector('#row_adgroup');
+        const output_adgroup = document.querySelector('#output_adgroup');
+        const output_code_adgroup = document.querySelector('#output_code_adgroup');
+
+        const output_code_utm = document.querySelector('#output_code_utm');
+
+        formElement.addEventListener('change', updateValue);
+
+        function clean(given_string) {
+            return _.upperFirst(_.camelCase(given_string).replace(/_|\s/gi, ""));
+        }
+        function dash_lower(given_string) {
+            return _.snakeCase(given_string).replace(/_/gi, "-")
+        }
+
+        function updateValue(e) {
+            // values
+            let channel_raw = formElement.elements['channel'].value;
+            let region_raw = formElement.elements['region'].value;
+            let platform_raw = formElement.elements['platform'].value;
+            let tactic_raw = formElement.elements['tactic'].value;
+            let product_category_raw = formElement.elements['productCategory'].value;
+            let audience_raw = formElement.elements['audience'].value;
+
+            var name = `${formElement.elements['channel'].value}_${formElement.elements['region'].value}_${formElement.elements['platform'].value}_${formElement.elements['tactic'].value}`;
+            if (formElement.elements['productCategory'].value && formElement.elements['audience'].value) {
+                name = name + "_" + clean(formElement.elements['productCategory'].value) + "_" + clean(formElement.elements['audience'].value)
+            } else if (formElement.elements['productCategory'].value) {
+                name = name + "_" + clean(formElement.elements['productCategory'].value)
+            } else if (formElement.elements['audience'].value) {
+                name = name + "__" + clean(formElement.elements['audience'].value)
+            }
+            output.textContent = name;
+            output_code.value = name;
+
+            var name_adgroup = ``;
+            if (formElement.elements['productCategory'].value && formElement.elements['audience'].value) {
+                name_adgroup = name_adgroup + clean(formElement.elements['productCategory'].value) + "_" + clean(formElement.elements['audience'].value)
+            } else if (formElement.elements['productCategory'].value) {
+                name_adgroup = name_adgroup + clean(formElement.elements['productCategory'].value)
+            } else if (formElement.elements['audience'].value) {
+                name_adgroup = name_adgroup + "_" + clean(formElement.elements['audience'].value)
+            }
+            if (name_adgroup.length > 0) {
+                row_adgroup.hidden = false;
+            } else if (name_adgroup.length == 0) {
+                row_adgroup.hidden = true;
+            }
+            output_adgroup.textContent = name_adgroup;
+            output_code_adgroup.value = name_adgroup;
+
+            // Build UTM
+            link_utm = 'https://yoursuper.com' + '/?' + 'utm_source=' + dash_lower(platform_raw) + '&' + 'utm_medium=' + dash_lower(channel_raw) + '&' + 'utm_campaign=' + name;
+            output_code_utm.value = link_utm;
+        }
+
+        updateValue()
+    </script>
+  </body>
+</html>
