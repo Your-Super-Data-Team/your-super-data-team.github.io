@@ -13,6 +13,13 @@
         .output {
             text-indent:1em;
             color:#ff8c00;
+            overflow-wrap: break-word;
+        }
+        .output-code {
+            margin-left:1em;
+        }
+        .output-row {
+            margin-bottom:1em;
         }
     </style>
   </head>
@@ -24,35 +31,42 @@
             </div>
         </div>
         <div class="row" style="height:2em;"></div> <!-- spacer -->
-        <div class="row"> <!-- campaign name -->
+        <div class="row output-row"> <!-- campaign name -->
             <div class="col-md">
-                <p>Campaign Name</p>
+                <h3>Campaign Name</h3>
                 <h2 id="output" class="output">Output example</h2>
-            </div>
-            <div class="col-md output_code">
-                <p>For Copy &amp; Paste</p>
-                <input type="text" value="" name="" id="output_code"/>
+                <div class="form-group output-code row">
+                    <!-- <input type="text" value="" name="" id="output_code"/> -->
+                    <label for="output_code" class="col-sm-2 col-form-label">For Copy &amp; Paste</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="output_code" rows="1"></textarea>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row" id="row_adgroup" hidden> <!-- ad group name -->
+        <div class="row output-row" id="row_adgroup" hidden> <!-- ad group name -->
             <div class="col-md">
-                <p>Ad Group</p>
+                <h3>Ad Group</h3>
+                <div class="alert alert-info output-code" role="alert">
+                    This is a short format for new ad groups. You don't need to rename old ad groups / ad sets just yet.
+                </div>
                 <h2 id="output_adgroup" class="output"> Adgroup </h2>
-            </div>
-            <div class="col-md output_code">
-                <p>For Copy &amp; Paste</p>
-                <p class=""><input type="text" value="" name="" id="output_code_adgroup"/> </p>
-            </div>
-            <div class="alert alert-info" role="alert">
-                This is a short format for new ad groups. You don't need to rename old ad groups / ad sets just yet.
+                <div class="form-group output-code row">
+                    <label for="output_code" class="col-sm-2 col-form-label">For Copy &amp; Paste</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="output_code_adgroup" rows="1"></textarea>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row" id="row_utm">
+        <div class="row output-row" id="row_utm">
             <div class="col-md">
-                <p>Link with UTM Tags</p>
-                <div class="form-group">
-                  <!-- <label for="output_code_utm">Link with UTM Tags</label> -->
-                  <textarea class="form-control" id="output_code_utm" rows="1"></textarea>
+                <h3>Link with UTM Tags</h3>
+                <div class="form-group output-code row">
+                    <label for="output_code" class="col-sm-2 col-form-label">For Copy &amp; Paste</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="output_code_utm" rows="2"></textarea>
+                    </div>
                 </div>
             </div>
         </div>
