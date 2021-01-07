@@ -13,6 +13,13 @@
         .output {
             text-indent:1em;
             color:#ff8c00;
+            overflow-wrap: break-word;
+        }
+        .output-code {
+            margin-left:1em;
+        }
+        .output-row {
+            margin-bottom:1em;
         }
     </style>
   </head>
@@ -23,28 +30,44 @@
                 <h1>Your Super Ad Naming Helper</h1>
             </div>
         </div>
-        <div class="row" style="height:2em;"></div>
-        <div class="row">
+        <div class="row" style="height:2em;"></div> <!-- spacer -->
+        <div class="row output-row"> <!-- campaign name -->
             <div class="col-md">
-                <p>Campaign Name</p>
+                <h3>Campaign Name</h3>
                 <h2 id="output" class="output">Output example</h2>
-            </div>
-            <div class="col-md output_code">
-                <p>For Copy &amp; Paste</p>
-                <input type="text" value="" name="" id="output_code"/>
+                <div class="form-group output-code row">
+                    <!-- <input type="text" value="" name="" id="output_code"/> -->
+                    <label for="output_code" class="col-sm-2 col-form-label">For Copy &amp; Paste</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="output_code" rows="1"></textarea>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row" id="row_adgroup" hidden>
+        <div class="row output-row" id="row_adgroup" hidden> <!-- ad group name -->
             <div class="col-md">
-                <p>Ad Group</p>
+                <h3>Ad Group</h3>
+                <div class="alert alert-info output-code" role="alert">
+                    This is a short format for new ad groups. You don't need to rename old ad groups / ad sets just yet.
+                </div>
                 <h2 id="output_adgroup" class="output"> Adgroup </h2>
+                <div class="form-group output-code row">
+                    <label for="output_code" class="col-sm-2 col-form-label">For Copy &amp; Paste</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="output_code_adgroup" rows="1"></textarea>
+                    </div>
+                </div>
             </div>
-            <div class="col-md output_code">
-                <p>For Copy &amp; Paste</p>
-                <p class=""><input type="text" value="" name="" id="output_code_adgroup"/> </p>
-            </div>
-            <div class="alert alert-info" role="alert">
-                This is a short format for new ad groups. You don't need to rename old ad groups / ad sets just yet.
+        </div>
+        <div class="row output-row" id="row_utm">
+            <div class="col-md">
+                <h3>Link with UTM Tags</h3>
+                <div class="form-group output-code row">
+                    <label for="output_code" class="col-sm-2 col-form-label">For Copy &amp; Paste</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="output_code_utm" rows="2"></textarea>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row" style="height:2em;"></div>
@@ -110,20 +133,32 @@
                     <div class="mb-3">
                         <label for="productCategory" class="form-label">Product Category</label>
                         <input type="text" class="form-control" id="productCategory">
+                        <small class="form-text text-muted">Multiple words will be combined using CamelCase style for the names and dash-lower for UTM tags. :)</small>
                     </div>
                 </div>
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="audience" class="form-label">Audience</label>
                         <input type="text" class="form-control" id="audience">
+                        <small class="form-text text-muted">Multiple words will be combined using CamelCase style for the names and dash-lower for UTM tags. :)</small>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm">
-                    <p>Multiple words will be combined in a CamelCase style. :)</p>
+                    <div class="mb-3">
+                        <label for="landingPage" class="form-label">Landing Page</label>
+                        <input type="text" class="form-control" id="landingPage" value="https://yoursuper.com">
+                        <small class="form-text text-muted">Used when building the link with UTM tags</small>
+                    </div>
                 </div>
-                <div class="col-sm"></div>
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="utmContent" class="form-label">UTM Content Tag (optional)</label>
+                        <input type="text" class="form-control" id="utmContent">
+                        <small class="form-text text-muted">You can use this to identify the creative in the ad.</small>
+                    </div>
+                </div>
             </div>
             </form>
         </div>
@@ -143,6 +178,7 @@
     -->
 
     <script>
+        const utm_source_map = {'FB': 'facebook', 'GOOGL': 'google', 'BNG': 'bing', 'YT': 'youtube', 'PIN': 'pinterest', 'Criteo': 'criteo', 'TT': 'tiktok'}
         const formElement = document.querySelector('#categories');
         const output = document.querySelector('#output');
         const output_code = document.querySelector('#output_code');
@@ -151,39 +187,80 @@
         const output_adgroup = document.querySelector('#output_adgroup');
         const output_code_adgroup = document.querySelector('#output_code_adgroup');
 
+        const output_code_utm = document.querySelector('#output_code_utm');
+
         formElement.addEventListener('change', updateValue);
 
         function clean(given_string) {
             return _.upperFirst(_.camelCase(given_string).replace(/_|\s/gi, ""));
         }
+        function dash_lower(given_string) {
+            return _.snakeCase(given_string).replace(/_/gi, "-")
+        }
+        function maybe_add_trailing_slash(url){
+            var lastChar = url.substr(-4); // Selects the last character
+            if (lastChar == '.com') {      // If the last character is not a slash
+               url = url + '/';            // Append a slash to it.
+            }
+            return url;
+        }
+        function adgroup_name( product_category_raw, audience_raw ) {
+            var name_adgroup = ``;
+            if (product_category_raw && audience_raw) {
+                name_adgroup = name_adgroup + clean(product_category_raw) + "_" + clean( audience_raw )
+            } else if (product_category_raw) {
+                name_adgroup = name_adgroup + clean(product_category_raw)
+            } else if ( audience_raw ) {
+                name_adgroup = name_adgroup + "_" + clean( audience_raw )
+            }
+            return name_adgroup;
+        }
+        function maybe_term(channel_raw, audience_raw) {
+            // return term value if this isn't paid search
+            if (channel_raw == 'PaidSearch' || audience_raw.length == 0) {
+                return '';
+            } else {
+                return `&utm_term=${dash_lower(audience_raw)}`;
+            }
+        }
+        function maybe_content(utm_content_raw){
+            if (utm_content_raw.length == 0) {
+                return '';
+            } else {
+                return `&utm_content=${dash_lower(utm_content_raw)}`;
+            }
+        }
 
         function updateValue(e) {
-            var name = `${formElement.elements['channel'].value}_${formElement.elements['region'].value}_${formElement.elements['platform'].value}_${formElement.elements['tactic'].value}`;
-            if (formElement.elements['productCategory'].value && formElement.elements['audience'].value) {
-                name = name + "_" + clean(formElement.elements['productCategory'].value) + "_" + clean(formElement.elements['audience'].value)
-            } else if (formElement.elements['productCategory'].value) {
-                name = name + "_" + clean(formElement.elements['productCategory'].value)
-            } else if (formElement.elements['audience'].value) {
-                name = name + "__" + clean(formElement.elements['audience'].value)
-            }
-            output.textContent = name;
-            output_code.value = name;
+            // Values
+            let channel_raw = formElement.elements['channel'].value;
+            let region_raw = formElement.elements['region'].value;
+            let platform_raw = formElement.elements['platform'].value;
+            let tactic_raw = formElement.elements['tactic'].value;
+            let product_category_raw = formElement.elements['productCategory'].value;
+            let audience_raw = formElement.elements['audience'].value;
+            let landing_page_raw = formElement.elements['landingPage'].value;
+            let utm_content_raw = formElement.elements['utmContent'].value;
 
-            var name_adgroup = ``;
-            if (formElement.elements['productCategory'].value && formElement.elements['audience'].value) {
-                name_adgroup = name_adgroup + clean(formElement.elements['productCategory'].value) + "_" + clean(formElement.elements['audience'].value)
-            } else if (formElement.elements['productCategory'].value) {
-                name_adgroup = name_adgroup + clean(formElement.elements['productCategory'].value)
-            } else if (formElement.elements['audience'].value) {
-                name_adgroup = name_adgroup + "_" + clean(formElement.elements['audience'].value)
-            }
+            let campaign_name_base = `${channel_raw}_${region_raw}_${platform_raw}_${tactic_raw}`;
+            let name_adgroup = adgroup_name( product_category_raw, audience_raw );
+
             if (name_adgroup.length > 0) {
                 row_adgroup.hidden = false;
+                var campaign_name = `${campaign_name_base}_${name_adgroup}`
             } else if (name_adgroup.length == 0) {
                 row_adgroup.hidden = true;
+                var campaign_name = `${campaign_name_base}`
             }
+
+            output.textContent = campaign_name;
+            output_code.value = campaign_name;
             output_adgroup.textContent = name_adgroup;
             output_code_adgroup.value = name_adgroup;
+
+            // Build UTM
+            link_utm = `${maybe_add_trailing_slash(landing_page_raw)}?utm_source=${dash_lower(utm_source_map[platform_raw])}&utm_medium=${dash_lower(channel_raw)}&utm_campaign=${campaign_name}${maybe_term(channel_raw, audience_raw)}${maybe_content(utm_content_raw)}`;
+            output_code_utm.value = link_utm;
         }
 
         updateValue()
