@@ -21,20 +21,25 @@
         .output-row {
             margin-bottom:1em;
         }
+        h3 {font-size:1.5rem;}
     </style>
   </head>
   <body>
     <div class="container">
         <div class="row page-header" style="margin-top:2em;">
             <div class="col-sm">
-                <h1>Your Super Ad Naming Helper</h1>
+                <h1>Your Super Campaign &amp; Ad Naming Helper</h1>
             </div>
         </div>
         <div class="row" style="height:2em;"></div> <!-- spacer -->
-        <div class="row output-row"> <!-- campaign name -->
+        <div class="row">
             <div class="col-md">
-                <h3>Campaign Name</h3>
-                <h2 id="output" class="output">Output example</h2>
+                <h2>Campaign Name</h2>
+            </div>
+        </div>
+        <div class="row output-row"> <!-- campaign name output -->
+            <div class="col-md">
+                <h3 id="output" class="output">Output example</h3>
                 <div class="form-group output-code row">
                     <!-- <input type="text" value="" name="" id="output_code"/> -->
                     <label for="output_code" class="col-sm-2 col-form-label">For Copy &amp; Paste</label>
@@ -134,31 +139,133 @@
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="productCategory" class="form-label">Product Category</label>
-                        <input type="text" class="form-control" id="productCategory">
-                        <small class="form-text text-muted">Multiple words will be combined using CamelCase style for the names and dash-lower for UTM tags. :)</small>
+                        <input type="text" class="form-control" id="productCategory" autocomplete="on">
+                        <small class="form-text text-muted">Multiple words will be combined using CamelCase style for the names and dash-lower for UTM tags.</small>
                     </div>
                 </div>
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="audience" class="form-label">Audience</label>
-                        <input type="text" class="form-control" id="audience">
-                        <small class="form-text text-muted">Multiple words will be combined using CamelCase style for the names and dash-lower for UTM tags. :)</small>
+                        <input type="text" class="form-control" id="audience" autocomplete="on">
+                        <small class="form-text text-muted">Multiple words will be combined using CamelCase style for the names and dash-lower for UTM tags.</small>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md" style="padding-top:3rem;">
+                    <h3>Additional detail for the UTM tags</h3>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="landingPage" class="form-label">Landing Page</label>
-                        <input type="text" class="form-control" id="landingPage" value="https://yoursuper.com">
+                        <input type="text" class="form-control" id="landingPage" value="https://yoursuper.com" autocomplete="on">
                         <small class="form-text text-muted">Used when building the link with UTM tags</small>
                     </div>
                 </div>
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="utmContent" class="form-label">UTM Content Tag (optional)</label>
-                        <input type="text" class="form-control" id="utmContent">
-                        <small class="form-text text-muted">You can use this to identify the creative in the ad.</small>
+                        <input type="text" class="form-control" id="utmContent" autocomplete="on">
+                        <small class="form-text text-muted">You can use this to identify the creative in the ad. If this is blank, it will use information from the ad name section below.</small>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md" style="padding-top:3rem;">
+                    <h3>Ad Name</h3>
+                </div>
+            </div>
+            <div class="row output-row"> <!-- Ad Name output -->
+                <div class="col-md">
+                    <h3 id="output_ad" class="output">Ad_Name</h3>
+                    <div class="form-group output-code row">
+                        <!-- <input type="text" value="" name="" id="output_code"/> -->
+                        <label for="output_code_ad" class="col-sm-2 col-form-label">For Copy &amp; Paste</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" id="output_code_ad" rows="1"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="ad_content_type" class="form-label">Ad Content Type</label>
+                        <select class="form-select" aria-label="ad_content_type" id="ad_content_type">
+                            <option value="Stc">Static Ads</option>
+                            <option value="Car">Static Carousel</option>
+                            <option value="Dyn">Dynamic Static</option>
+                            <option value="DCA">Dynamic Creative Ad</option>
+                            <option value="CDy">Dynamic Carousel</option>
+                            <option value="PLA">Product Listing Ad</option>
+                            <option value="T">Text Only Ad</option>
+                            <option value="Vid">Video Ad</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="ad_language" class="form-label">Ad Language</label>
+                        <select class="form-select" aria-label="ad_language" id="ad_language">
+                            <option value="EN">English</option>
+                            <option value="DE">German</option>
+                            <option value="NL">Dutch</option>
+                            <option value="FR">French</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="ad_content_focus" class="form-label">Content Focus</label>
+                        <input type="text" class="form-control" id="ad_content_focus" autocomplete="on">
+                        <small class="form-text text-muted">You can use this to identify what the ad focuses on (NYNY21, etc).</small>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="ad_image_name" class="form-label">Image or Video Name</label>
+                        <input type="text" class="form-control" id="ad_image_name" autocomplete="on">
+                        <small class="form-text text-muted">This identifies which image or video the ad uses. It can also be left blank.</small>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="ad_copy_name" class="form-label">Copy Name</label>
+                        <input type="text" class="form-control" id="ad_copy_name" autocomplete="on">
+                        <small class="form-text text-muted">Use this to identify the copy used in the ad.</small>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="ad_destination_name" class="form-label">Destination Name</label>
+                        <input type="text" class="form-control" id="ad_destination_name" autocomplete="on">
+                        <small class="form-text text-muted">A name for the page the ad directs to</small>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="ad_destination_type" class="form-label">Destination Type</label>
+                        <select class="form-select" aria-label="ad_destination_type" id="ad_destination_type">
+                            <option value="LP">Landing Page</option>
+                            <option value="PDP">Product Detail Page</option>
+                            <option value="PLP">Product Listing Page</option>
+                            <option value="BP">Blog</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="ad_note" class="form-label">Ad Note (may not be needed)</label>
+                        <input type="text" class="form-control" id="ad_note" autocomplete="on">
+                        <small class="form-text text-muted">Any other information you want to include (optional)</small>
                     </div>
                 </div>
             </div>
@@ -184,12 +291,15 @@
         const formElement = document.querySelector('#categories');
         const output = document.querySelector('#output');
         const output_code = document.querySelector('#output_code');
-
+        // For the Ad Group
         const row_adgroup = document.querySelector('#row_adgroup');
         const output_adgroup = document.querySelector('#output_adgroup');
         const output_code_adgroup = document.querySelector('#output_code_adgroup');
-
+        // For the UTM Tag
         const output_code_utm = document.querySelector('#output_code_utm');
+        // For the Ad Name
+        const output_ad = document.querySelector('#output_ad');
+        const output_code_ad = document.querySelector('#output_code_ad');
 
         formElement.addEventListener('change', updateValue);
 
@@ -225,11 +335,12 @@
                 return `&utm_term=${dash_lower(audience_raw)}`;
             }
         }
-        function maybe_content(utm_content_raw){
-            if (utm_content_raw.length == 0) {
+        function maybe_content(utm_content_raw, ad_image_name, ad_copy_name){
+            let content = (utm_content_raw.length == 0) ? `${dash_lower(ad_image_name)}--${dash_lower(ad_copy_name)}` : dash_lower(utm_content_raw)
+            if (content.length == 0) {
                 return '';
             } else {
-                return `&utm_content=${dash_lower(utm_content_raw)}`;
+                return `&utm_content=${content}`;
             }
         }
 
@@ -243,7 +354,16 @@
             let audience_raw = formElement.elements['audience'].value;
             let landing_page_raw = formElement.elements['landingPage'].value;
             let utm_content_raw = formElement.elements['utmContent'].value;
+            let ad_content_type = formElement.elements['ad_content_type'].value;
+            let ad_language = formElement.elements['ad_language'].value;
+            let ad_content_focus = formElement.elements['ad_content_focus'].value;
+            let ad_image_name = formElement.elements['ad_image_name'].value;
+            let ad_copy_name = formElement.elements['ad_copy_name'].value;
+            let ad_destination_name = formElement.elements['ad_destination_name'].value;
+            let ad_destination_type = formElement.elements['ad_destination_type'].value;
+            let ad_note = formElement.elements['ad_note'].value;
 
+            // Build Campaign & UTM
             let campaign_name_base = `${channel_raw}_${region_raw}_${platform_raw}_${tactic_raw}`;
             let name_adgroup = adgroup_name( product_category_raw, audience_raw );
 
@@ -255,13 +375,21 @@
                 var campaign_name = `${campaign_name_base}`
             }
 
+            // Build Ad Name
+            let ad_name_base = `${ad_content_type}_${clean(ad_content_focus)}_${clean(ad_image_name)}_${clean(ad_copy_name)}_${clean(ad_destination_name)}_${ad_destination_type}_${ad_language}_${clean(ad_note)}_YS1`
+
+            // Display Campaign and AdGroup Name
             output.textContent = campaign_name;
             output_code.value = campaign_name;
             output_adgroup.textContent = name_adgroup;
             output_code_adgroup.value = name_adgroup;
 
+            // Display Ad Name
+            output_ad.textContent = ad_name_base
+            output_code_ad.value = ad_name_base
+
             // Build UTM
-            link_utm = `${maybe_add_trailing_slash(landing_page_raw)}?utm_source=${dash_lower(utm_source_map[platform_raw])}&utm_medium=${dash_lower(channel_raw)}&utm_campaign=${campaign_name}${maybe_term(channel_raw, audience_raw)}${maybe_content(utm_content_raw)}`;
+            link_utm = `${maybe_add_trailing_slash(landing_page_raw)}?utm_source=${dash_lower(utm_source_map[platform_raw])}&utm_medium=${dash_lower(channel_raw)}&utm_campaign=${campaign_name}${maybe_term(channel_raw, audience_raw)}${maybe_content(utm_content_raw, ad_image_name, ad_copy_name)}`;
             output_code_utm.value = link_utm;
         }
 
