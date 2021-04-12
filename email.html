@@ -106,9 +106,55 @@
                     </div>
                 </div>
             </div>
+            <div style="height:2em;"></div>
+            <div class="row">
+                <div class="col-md">
+                    <h2>Flow Name</h2>
+                </div>
+            </div>
+            <div class="row output-row"> <!-- campaign name output -->
+                <div class="col-md">
+                    <h3 id="output_flow" class="output">Output example</h3>
+                    <div class="form-group output-code row">
+                        <!-- <input type="text" value="" name="" id="output_code"/> -->
+                        <label for="output_code_flow" class="col-sm-2 col-form-label">For Copy &amp; Paste</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" id="output_code_flow" rows="1"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="flow_trigger" class="form-label">Flow Trigger</label>
+                        <select class="form-select" aria-label="flow_trigger" id="flow_trigger">
+                            <option value="AC">Abandon Cart</option>
+                            <option value="AB">Browse Abandonment</option>
+                            <option value="WB">Winback</option>
+                            <option value="LY">Loyalty</option>
+                            <option value="LG">Lead Generation</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="flow_topic" class="form-label">Flow Topic</label>
+                        <input type="text" class="form-control" id="flow_topic" autocomplete="on">
+                        <small class="form-text text-muted">Multiple words will be combined using CamelCase style.</small>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="flow_order" class="form-label">Number in the flow</label>
+                        <input type="number" class="form-control" id="flow_order" autocomplete="on">
+                        <small class="form-text text-muted">Numbers only</small>
+                    </div>
+                </div>
+            </div>
             </form>
         </div>
-        <div style="height:5em;"></div>
+        <div style="height:6em;"></div>
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
@@ -127,6 +173,8 @@
         const formElement = document.querySelector('#categories');
         const output = document.querySelector('#output');
         const output_code = document.querySelector('#output_code');
+        const output_flow = document.querySelector('#output_flow');
+        const output_code_flow = document.querySelector('#output_code_flow');
 
         document.getElementById('date').valueAsDate = new Date();
         formElement.addEventListener('change', updateValue);
@@ -154,12 +202,18 @@
             let topic_raw = formElement.elements['topic'].value;
             let note_raw = formElement.elements['note'].value;
 
-            // Build Campaign & UTM
-            let campaign_name = `${audience_raw}_${campaign_type_raw}_${clean(topic_raw)}_${date_raw}_${is_resend_raw}_${clean(note_raw)}_E1`;
+            let flow_trigger_raw = formElement.elements['flow_trigger'].value;
+            let flow_topic_raw = formElement.elements['flow_topic'].value;
+            let flow_number_raw = formElement.elements['flow_order'].value;
 
-            // Display Campaign and AdGroup Name
+            // Build Campaign and flow name
+            let campaign_name = `${audience_raw}_${campaign_type_raw}_${clean(topic_raw)}_${date_raw}_${is_resend_raw}_${clean(note_raw)}_E1`;
             output.textContent = campaign_name;
             output_code.value = campaign_name;
+
+            let flow_name = `${flow_trigger_raw}_${clean(flow_topic_raw)}_${flow_number_raw}_F1`;
+            output_flow.textContent = flow_name;
+            output_code_flow.value = flow_name;
         }
 
         updateValue()
