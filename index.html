@@ -271,6 +271,19 @@
             <div class="row">
                 <div class="col-sm">
                     <div class="mb-3">
+                        <label for="ad_tactic" class="form-label">Ad Tactic</label>
+                        <select class="form-select" aria-label="Channel Selector" id="ad_tactic">
+                            <option value="PROS">Prospecting</option>
+                            <option value="RET">Retargeting</option>
+                            <option value="Mixed">Mixed</option>
+                            <option value="AP">After Purchase</option>
+                            <option value="NB">Non-Branded</option>
+                            <option value="B">Branded</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-3">
                         <label for="ad_note" class="form-label">Ad Note (may not be needed)</label>
                         <input type="text" class="form-control" id="ad_note" autocomplete="on">
                         <small class="form-text text-muted">Any other information you want to include (optional)</small>
@@ -364,6 +377,7 @@
             // Related to UTM tags
             let landing_page_raw = formElement.elements['landingPage'].value;
             let utm_content_raw = formElement.elements['utmContent'].value;
+            // Related to ad name
             let ad_content_type = formElement.elements['ad_content_type'].value;
             let ad_language = formElement.elements['ad_language'].value;
             let ad_content_focus = formElement.elements['ad_content_focus'].value;
@@ -371,7 +385,10 @@
             let ad_copy_name = formElement.elements['ad_copy_name'].value;
             let ad_destination_name = formElement.elements['ad_destination_name'].value;
             let ad_destination_type = formElement.elements['ad_destination_type'].value;
+            let ad_tactic = formElement.elements['ad_tactic'].value;
             let ad_note = formElement.elements['ad_note'].value;
+
+            // Make the two tactic forms match
 
             // Build Campaign & UTM
             let campaign_name_base = `${channel_raw}_${region_raw}_${platform_raw}_${tactic_raw}`;
@@ -386,7 +403,8 @@
             }
 
             // Build Ad Name
-            let ad_name_base = `${ad_content_type}_${clean(ad_content_focus)}_${clean(ad_image_name)}_${clean(ad_copy_name)}_${clean(ad_destination_name)}_${ad_destination_type}_${ad_language}_${clean(ad_note)}_YS1`
+            // let ad_name_base = `${ad_content_type}_${clean(ad_content_focus)}_${clean(ad_image_name)}_${clean(ad_copy_name)}_${clean(ad_destination_name)}_${ad_destination_type}_${ad_language}_${clean(ad_note)}_YS1`
+            let ad_name_base = `${ad_content_type}_${clean(ad_content_focus)}_${clean(ad_image_name)}_${clean(ad_copy_name)}_${clean(ad_destination_name)}_${ad_destination_type}_${ad_language}_${ad_tactic}_${clean(ad_note)}_YS2`
 
             // Display Campaign and AdGroup Name
             output.textContent = campaign_name;
