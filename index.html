@@ -49,13 +49,13 @@
                 </div>
             </div>
         </div>
-        <div class="row output-row" id="row_adgroup" hidden> <!-- ad group name -->
+        <div class="row output-row" id="row_adgroup"> <!-- ad group name -->
             <div class="col-md">
                 <h3>Ad Group</h3>
-                <div class="alert alert-info output-code" role="alert">
-                    This is a short format for new ad groups. You don't need to rename old ad groups / ad sets just yet.
-                </div>
-                <h2 id="output_adgroup" class="output"> Adgroup </h2>
+                <!-- <div class="alert alert&#45;info output&#45;code" role="alert"> -->
+                <!--     This is a short format for new ad groups. -->
+                <!-- </div> -->
+                <h3 id="output_adgroup" class="output"> Adgroup </h3>
                 <div class="form-group output-code row">
                     <label for="output_code" class="col-sm-2 col-form-label">For Copy &amp; Paste</label>
                     <div class="col-sm-10">
@@ -148,6 +148,13 @@
                         <label for="audience" class="form-label">Audience</label>
                         <input type="text" class="form-control" id="audience" autocomplete="on">
                         <small class="form-text text-muted">Multiple words will be combined using CamelCase style for the names and dash-lower for UTM tags.</small>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-3">
+                        <label for="is_experiment" class="form-check-label">Is An Experiment</label>
+                        <br/>
+                        <input type="checkbox" class="form-check-input" id="is_experiment">
                     </div>
                 </div>
             </div>
@@ -317,14 +324,13 @@
             }
             return url;
         }
-        function adgroup_name( product_category_raw, audience_raw ) {
+        function adgroup_name( product_category_raw, audience_raw, is_experiment_raw ) {
             var name_adgroup = ``;
-            if (product_category_raw && audience_raw) {
+            if (product_category_raw || audience_raw || is_experiment_raw) {
                 name_adgroup = name_adgroup + clean(product_category_raw) + "_" + clean( audience_raw )
-            } else if (product_category_raw) {
-                name_adgroup = name_adgroup + clean(product_category_raw)
-            } else if ( audience_raw ) {
-                name_adgroup = name_adgroup + "_" + clean( audience_raw )
+            }
+            if (is_experiment_raw.length > 0) {
+                name_adgroup = name_adgroup + "_" + is_experiment_raw
             }
             return name_adgroup;
         }
@@ -351,8 +357,11 @@
             let region_raw = formElement.elements['region'].value;
             let platform_raw = formElement.elements['platform'].value;
             let tactic_raw = formElement.elements['tactic'].value;
+            // Related to Ad Group / Ad Set
             let product_category_raw = formElement.elements['productCategory'].value;
             let audience_raw = formElement.elements['audience'].value;
+            let is_experiment_raw = formElement.elements['is_experiment'].checked ? "Exp" : "";
+            // Related to UTM tags
             let landing_page_raw = formElement.elements['landingPage'].value;
             let utm_content_raw = formElement.elements['utmContent'].value;
             let ad_content_type = formElement.elements['ad_content_type'].value;
@@ -366,14 +375,14 @@
 
             // Build Campaign & UTM
             let campaign_name_base = `${channel_raw}_${region_raw}_${platform_raw}_${tactic_raw}`;
-            let name_adgroup = adgroup_name( product_category_raw, audience_raw );
+            let name_adgroup = adgroup_name( product_category_raw, audience_raw, is_experiment_raw );
 
             if (name_adgroup.length > 0) {
-                row_adgroup.hidden = false;
-                var campaign_name = `${campaign_name_base}_${name_adgroup}`
+                // row_adgroup.hidden = false;
+                var campaign_name = `${campaign_name_base}_${name_adgroup}_C1`
             } else if (name_adgroup.length == 0) {
-                row_adgroup.hidden = true;
-                var campaign_name = `${campaign_name_base}`
+                // row_adgroup.hidden = true;
+                var campaign_name = `${campaign_name_base}_C1`
             }
 
             // Build Ad Name
@@ -382,7 +391,7 @@
             // Display Campaign and AdGroup Name
             output.textContent = campaign_name;
             output_code.value = campaign_name;
-            output_adgroup.textContent = name_adgroup;
+            output_adgroup.textContent = (name_adgroup.length > 0) ? name_adgroup : "No Product or Audience Defined";
             output_code_adgroup.value = name_adgroup;
 
             // Display Ad Name
