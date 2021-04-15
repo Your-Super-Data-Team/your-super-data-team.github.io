@@ -239,6 +239,13 @@
                         <small class="form-text text-muted">This identifies which image or video the ad uses. It can also be left blank.</small>
                     </div>
                 </div>
+                <div class="col-sm" id="row_video_length">
+                    <div class="mb-3">
+                        <label for="ad_video_length" class="form-label">Video Length (optional)</label>
+                        <input type="number" class="form-control" id="ad_video_length" autocomplete="on">
+                        <small class="form-text text-muted">The length of the video in seconds; Numbers only</small>
+                    </div>
+                </div>
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="ad_copy_name" class="form-label">Copy Name</label>
@@ -363,6 +370,13 @@
                 return `&utm_content=${content}`;
             }
         }
+        function build_image_video_name(ad_image_name, ad_video_length) {
+            var image_video_name = clean(ad_image_name)
+            if (ad_video_length.length > 0) {
+                image_video_name = image_video_name + "-" + ad_video_length + "s"
+            }
+            return image_video_name;
+        }
 
         function updateValue(e) {
             // Values
@@ -387,6 +401,7 @@
             let ad_destination_type = formElement.elements['ad_destination_type'].value;
             let ad_tactic = formElement.elements['ad_tactic'].value;
             let ad_note = formElement.elements['ad_note'].value;
+            let ad_video_length = formElement.elements['ad_video_length'].value;
 
             // Make the two tactic forms match
 
@@ -404,7 +419,7 @@
 
             // Build Ad Name
             // let ad_name_base = `${ad_content_type}_${clean(ad_content_focus)}_${clean(ad_image_name)}_${clean(ad_copy_name)}_${clean(ad_destination_name)}_${ad_destination_type}_${ad_language}_${clean(ad_note)}_YS1`
-            let ad_name_base = `${ad_content_type}_${clean(ad_content_focus)}_${clean(ad_image_name)}_${clean(ad_copy_name)}_${clean(ad_destination_name)}_${ad_destination_type}_${ad_language}_${ad_tactic}_${clean(ad_note)}_YS2`
+            let ad_name_base = `${ad_content_type}_${clean(ad_content_focus)}_${build_image_video_name(ad_image_name,ad_video_length)}_${clean(ad_copy_name)}_${clean(ad_destination_name)}_${ad_destination_type}_${ad_language}_${ad_tactic}_${clean(ad_note)}_YS2`
 
             // Display Campaign and AdGroup Name
             output.textContent = campaign_name;
