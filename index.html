@@ -77,7 +77,7 @@
         </div>
         <div class="row" style="height:2em;"></div>
         <div class="row">
-            <form id="categories">
+            <form id="nameInfo">
             <div class="row">
                 <div class="col-sm">
                     <div class="mb-3">
@@ -314,129 +314,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
     -->
 
-    <script>
-        const utm_source_map = {'FB': 'facebook', 'GOOGL': 'google', 'BNG': 'bing', 'YT': 'youtube', 'PIN': 'pinterest', 'Criteo': 'criteo', 'TT': 'tiktok', 'Acuity': 'acuity'}
-        const formElement = document.querySelector('#categories');
-        const output = document.querySelector('#output');
-        const output_code = document.querySelector('#output_code');
-        // For the Ad Group
-        const row_adgroup = document.querySelector('#row_adgroup');
-        const output_adgroup = document.querySelector('#output_adgroup');
-        const output_code_adgroup = document.querySelector('#output_code_adgroup');
-        // For the UTM Tag
-        const output_code_utm = document.querySelector('#output_code_utm');
-        // For the Ad Name
-        const output_ad = document.querySelector('#output_ad');
-        const output_code_ad = document.querySelector('#output_code_ad');
-
-        formElement.addEventListener('change', updateValue);
-
-        function clean(given_string) {
-            return _.upperFirst(_.camelCase(given_string).replace(/_|\s/gi, ""));
-        }
-        function dash_lower(given_string) {
-            return _.snakeCase(given_string).replace(/_/gi, "-")
-        }
-        function maybe_add_trailing_slash(url){
-            var lastChar = url.substr(-4); // Selects the last character
-            if (lastChar == '.com') {      // If the last character is not a slash
-               url = url + '/';            // Append a slash to it.
-            }
-            return url;
-        }
-        function adgroup_name( product_category_raw, audience_raw, is_experiment_raw ) {
-            var name_adgroup = ``;
-            if (product_category_raw || audience_raw || is_experiment_raw) {
-                name_adgroup = name_adgroup + clean(product_category_raw) + "_" + clean( audience_raw )
-            }
-            if (is_experiment_raw.length > 0) {
-                name_adgroup = name_adgroup + "_" + is_experiment_raw
-            }
-            return name_adgroup;
-        }
-        function maybe_term(channel_raw, audience_raw) {
-            // return term value if this isn't paid search
-            if (channel_raw == 'PaidSearch' || audience_raw.length == 0) {
-                return '';
-            } else {
-                return `&utm_term=${dash_lower(audience_raw)}`;
-            }
-        }
-        function maybe_content(utm_content_raw, ad_image_name, ad_copy_name){
-            let content = (utm_content_raw.length == 0) ? `${dash_lower(ad_image_name)}--${dash_lower(ad_copy_name)}` : dash_lower(utm_content_raw)
-            if (content.length == 0) {
-                return '';
-            } else {
-                return `&utm_content=${content}`;
-            }
-        }
-        function build_image_video_name(ad_image_name, ad_video_length) {
-            var image_video_name = clean(ad_image_name)
-            if (ad_video_length.length > 0) {
-                image_video_name = image_video_name + "-" + ad_video_length + "s"
-            }
-            return image_video_name;
-        }
-
-        function updateValue(e) {
-            // Values
-            let channel_raw = formElement.elements['channel'].value;
-            let region_raw = formElement.elements['region'].value;
-            let platform_raw = formElement.elements['platform'].value;
-            let tactic_raw = formElement.elements['tactic'].value;
-            // Related to Ad Group / Ad Set
-            let product_category_raw = formElement.elements['productCategory'].value;
-            let audience_raw = formElement.elements['audience'].value;
-            let is_experiment_raw = formElement.elements['is_experiment'].checked ? "Exp" : "";
-            // Related to UTM tags
-            let landing_page_raw = formElement.elements['landingPage'].value;
-            let utm_content_raw = formElement.elements['utmContent'].value;
-            // Related to ad name
-            let ad_content_type = formElement.elements['ad_content_type'].value;
-            let ad_language = formElement.elements['ad_language'].value;
-            let ad_content_focus = formElement.elements['ad_content_focus'].value;
-            let ad_image_name = formElement.elements['ad_image_name'].value;
-            let ad_copy_name = formElement.elements['ad_copy_name'].value;
-            let ad_destination_name = formElement.elements['ad_destination_name'].value;
-            let ad_destination_type = formElement.elements['ad_destination_type'].value;
-            let ad_tactic = formElement.elements['ad_tactic'].value;
-            let ad_note = formElement.elements['ad_note'].value;
-            let ad_video_length = formElement.elements['ad_video_length'].value;
-
-            // Make the two tactic forms match
-
-            // Build Campaign & UTM
-            let campaign_name_base = `${channel_raw}_${region_raw}_${platform_raw}_${tactic_raw}`;
-            let name_adgroup = adgroup_name( product_category_raw, audience_raw, is_experiment_raw );
-
-            if (name_adgroup.length > 0) {
-                // row_adgroup.hidden = false;
-                var campaign_name = `${campaign_name_base}_${name_adgroup}_C1`
-            } else if (name_adgroup.length == 0) {
-                // row_adgroup.hidden = true;
-                var campaign_name = `${campaign_name_base}_C1`
-            }
-
-            // Build Ad Name
-            // let ad_name_base = `${ad_content_type}_${clean(ad_content_focus)}_${clean(ad_image_name)}_${clean(ad_copy_name)}_${clean(ad_destination_name)}_${ad_destination_type}_${ad_language}_${clean(ad_note)}_YS1`
-            let ad_name_base = `${ad_content_type}_${clean(ad_content_focus)}_${build_image_video_name(ad_image_name,ad_video_length)}_${clean(ad_copy_name)}_${clean(ad_destination_name)}_${ad_destination_type}_${ad_language}_${ad_tactic}_${clean(ad_note)}_YS2`
-
-            // Display Campaign and AdGroup Name
-            output.textContent = campaign_name;
-            output_code.value = campaign_name;
-            output_adgroup.textContent = (name_adgroup.length > 0) ? name_adgroup : "No Product or Audience Defined";
-            output_code_adgroup.value = name_adgroup;
-
-            // Display Ad Name
-            output_ad.textContent = ad_name_base
-            output_code_ad.value = ad_name_base
-
-            // Build UTM
-            link_utm = `${maybe_add_trailing_slash(landing_page_raw)}?utm_source=${dash_lower(utm_source_map[platform_raw])}&utm_medium=${dash_lower(channel_raw)}&utm_campaign=${campaign_name}${maybe_term(channel_raw, audience_raw)}${maybe_content(utm_content_raw, ad_image_name, ad_copy_name)}`;
-            output_code_utm.value = link_utm;
-        }
-
-        updateValue()
-    </script>
+    <script src="js/namer.js"></script>
   </body>
 </html>

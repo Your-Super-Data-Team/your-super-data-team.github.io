@@ -51,7 +51,7 @@
         </div>
         <div class="row" style="height:2em;"></div>
         <div class="row">
-            <form id="categories">
+            <form id="nameInfoEmail">
             <div class="row">
                 <div class="col-sm">
                     <div class="mb-3">
@@ -169,54 +169,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
     -->
 
-    <script>
-        const formElement = document.querySelector('#categories');
-        const output = document.querySelector('#output');
-        const output_code = document.querySelector('#output_code');
-        const output_flow = document.querySelector('#output_flow');
-        const output_code_flow = document.querySelector('#output_code_flow');
-
-        document.getElementById('date').valueAsDate = new Date();
-        formElement.addEventListener('change', updateValue);
-
-        function clean(given_string) {
-            return _.upperFirst(_.camelCase(given_string).replace(/_|\s/gi, ""));
-        }
-        function dash_lower(given_string) {
-            return _.snakeCase(given_string).replace(/_/gi, "-")
-        }
-        function maybe_add_trailing_slash(url){
-            var lastChar = url.substr(-4); // Selects the last character
-            if (lastChar == '.com') {      // If the last character is not a slash
-               url = url + '/';            // Append a slash to it.
-            }
-            return url;
-        }
-
-        function updateValue(e) {
-            // Values
-            let audience_raw = formElement.elements['audience'].value;
-            let campaign_type_raw = formElement.elements['campaign_type'].value;
-            let date_raw = formElement.elements['date'].value;
-            let is_resend_raw = formElement.elements['is_resend'].checked ? "Resend" : "";
-            let topic_raw = formElement.elements['topic'].value;
-            let note_raw = formElement.elements['note'].value;
-
-            let flow_trigger_raw = formElement.elements['flow_trigger'].value;
-            let flow_topic_raw = formElement.elements['flow_topic'].value;
-            let flow_number_raw = formElement.elements['flow_order'].value;
-
-            // Build Campaign and flow name
-            let campaign_name = `${audience_raw}_${campaign_type_raw}_${clean(topic_raw)}_${date_raw}_${is_resend_raw}_${clean(note_raw)}_E1`;
-            output.textContent = campaign_name;
-            output_code.value = campaign_name;
-
-            let flow_name = `${flow_trigger_raw}_${clean(flow_topic_raw)}_${flow_number_raw}_F1`;
-            output_flow.textContent = flow_name;
-            output_code_flow.value = flow_name;
-        }
-
-        updateValue()
-    </script>
+    <script src="js/namer.js"> </script>
   </body>
 </html>
