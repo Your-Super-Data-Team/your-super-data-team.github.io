@@ -1,13 +1,4 @@
-const utm_source_map = {
-  FB: 'facebook',
-  GOOGL: 'google',
-  BNG: 'bing',
-  YT: 'youtube',
-  PIN: 'pinterest',
-  Criteo: 'criteo',
-  TT: 'tiktok',
-  Acuity: 'acuity'
-}
+// Main selectors
 const formElement = document.querySelector('#nameInfo')
 const formElementEmail = document.querySelector('#nameInfoEmail')
 const output = document.querySelector('#output')
@@ -25,6 +16,19 @@ const output_code_ad = document.querySelector('#output_code_ad')
 const output_flow = document.querySelector('#output_flow')
 const output_code_flow = document.querySelector('#output_code_flow')
 
+// Reference Information
+const utm_source_map = {
+  FB: 'facebook',
+  GOOGL: 'google',
+  BNG: 'bing',
+  YT: 'youtube',
+  PIN: 'pinterest',
+  Criteo: 'criteo',
+  TT: 'tiktok',
+  Acuity: 'acuity'
+}
+
+// Helper Functions
 function clean (given_string) {
   return _.upperFirst(_.camelCase(given_string).replace(/_|\s/gi, ''))
 }
@@ -77,7 +81,7 @@ function build_image_video_name (ad_image_name, ad_video_length) {
   return image_video_name
 }
 
-// Full update functions
+// Full Update functions
 function updateValue (e) {
   // Form values
   let channel_raw = formElement.elements['channel'].value
