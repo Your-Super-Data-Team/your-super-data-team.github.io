@@ -22,7 +22,7 @@
             margin-bottom:1em;
         }
         h3 {font-size:1.5rem;}
-        .editable {background:#DEF1C8;border-radius: 15px;}
+        .editable {background:#DEF1C8;border-radius: 3px;}
         /* #BFDE9C */
     </style>
   </head>
@@ -78,13 +78,13 @@
             </div>
         </div>
         <div class="row" style="height:2em;"></div>
-        <div class="row editable">
+        <div class="row">
             <form id="nameInfo">
-            <div class="row">
+            <div class="row editable">
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="channel" class="form-label">Channel</label>
-                        <select class="form-select" aria-label="Channel Selector" name="Ad channel" id="channel">
+                        <select class="form-select auto-save" aria-label="Channel Selector" name="Ad channel" id="channel">
                             <option value="PaidSocial">Paid Social</option>
                             <option value="PaidSearch">Paid Search</option>
                             <option value="Video">Video</option>
@@ -99,7 +99,7 @@
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="region" class="form-label">Region</label>
-                        <select class="form-select" aria-label="Channel Selector" id="region">
+                        <select class="form-select auto-save" aria-label="Channel Selector" id="region">
                             <option value="US">United States</option>
                             <option value="EU">European Union</option>
                             <option value="DE">Germany</option>
@@ -107,11 +107,11 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row editable">
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="platform" class="form-label">Platform</label>
-                        <select class="form-select" aria-label="Channel Selector" id="platform">
+                        <select class="form-select auto-save" aria-label="Channel Selector" id="platform">
                             <option value="FB">Facebook</option>
                             <option value="GOOGL">Google</option>
                             <option value="BNG">Bing</option>
@@ -126,7 +126,7 @@
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="tactic" class="form-label">Tactic</label>
-                        <select class="form-select" aria-label="Channel Selector" id="tactic">
+                        <select class="form-select auto-save" aria-label="Channel Selector" id="tactic">
                             <option value="PROS">Prospecting</option>
                             <option value="RET">Retargeting</option>
                             <option value="Mixed">Mixed</option>
@@ -137,18 +137,18 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row editable">
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="productCategory" class="form-label">Product Category</label>
-                        <input type="text" class="form-control" id="productCategory" autocomplete="on">
+                        <input type="text" class="form-control auto-save" id="productCategory" autocomplete="on">
                         <small class="form-text text-muted">Multiple words will be combined using CamelCase style for the names and dash-lower for UTM tags.</small>
                     </div>
                 </div>
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="audience" class="form-label">Audience</label>
-                        <input type="text" class="form-control" id="audience" autocomplete="on">
+                        <input type="text" class="form-control auto-save" id="audience" autocomplete="on">
                         <small class="form-text text-muted">Multiple words will be combined using CamelCase style for the names and dash-lower for UTM tags.</small>
                     </div>
                 </div>
@@ -156,55 +156,58 @@
                     <div class="mb-3">
                         <label for="is_experiment" class="form-check-label">Is An Experiment</label>
                         <br/>
-                        <input type="checkbox" class="form-check-input" id="is_experiment">
+                        <input type="checkbox" class="form-check-input auto-save" id="is_experiment">
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row editable">
                 <div class="col-md" style="padding-top:3rem;">
                     <h3>Additional detail for the UTM tags</h3>
                 </div>
             </div>
-            <div class="row">
+            <div class="row editable">
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="landingPage" class="form-label">Landing Page</label>
-                        <input type="text" class="form-control" id="landingPage" value="https://yoursuper.com" autocomplete="on">
+                        <input type="text" list="your_super_sites" class="form-control auto-save" id="landingPage" value="https://yoursuper.com" autocomplete="on">
+                        <datalist id="your_super_sites">
+                          <option value="https://yoursuper.com">
+                          <option value="https://yoursuperfoods.de">
+                          <option value="https://www.yoursuper.eu">
+                        </datalist>
                         <small class="form-text text-muted">Used when building the link with UTM tags</small>
                     </div>
                 </div>
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="utmContent" class="form-label">UTM Content Tag (optional)</label>
-                        <input type="text" class="form-control" id="utmContent" autocomplete="on">
+                        <input type="text" class="form-control auto-save" id="utmContent" autocomplete="on">
                         <small class="form-text text-muted">You can use this to identify the creative in the ad. If this is blank, it will use information from the ad name section below.</small>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md" style="padding-top:3rem;">
-                <h3>Ad Name</h3>
+            <div class="row"> <!-- Ad Name -->
+                <div class="col-md" style="padding-top:3rem;">
+                    <h3>Ad Name</h3>
+                </div>
             </div>
-        </div>
-        <div class="row output-row"> <!-- Ad Name output -->
-            <div class="col-md">
-                <h3 id="output_ad" class="output">Ad_Name</h3>
-                <div class="form-group output-code row">
-                    <!-- <input type="text" value="" name="" id="output_code"/> -->
-                    <label for="output_code_ad" class="col-sm-2 col-form-label">For Copy &amp; Paste</label>
-                    <div class="col-sm-10">
-                        <textarea class="form-control" id="output_code_ad" rows="1"></textarea>
+            <div class="row output-row"> <!-- Ad Name output -->
+                <div class="col-md">
+                    <h3 id="output_ad" class="output">Ad_Name</h3>
+                    <div class="form-group output-code row">
+                        <!-- <input type="text" value="" name="" id="output_code"/> -->
+                        <label for="output_code_ad" class="col-sm-2 col-form-label">For Copy &amp; Paste</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" id="output_code_ad" rows="1"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row editable">
-            <div class="row">
+            <div class="row editable">
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="ad_content_type" class="form-label">Ad Content Type</label>
-                        <select class="form-select" aria-label="ad_content_type" id="ad_content_type">
+                        <select class="form-select auto-save" aria-label="ad_content_type" id="ad_content_type">
                             <option value="Stc">Static Ads</option>
                             <option value="Car">Static Carousel</option>
                             <option value="Dyn">Dynamic Static</option>
@@ -219,7 +222,7 @@
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="ad_language" class="form-label">Ad Language</label>
-                        <select class="form-select" aria-label="ad_language" id="ad_language">
+                        <select class="form-select auto-save" aria-label="ad_language" id="ad_language">
                             <option value="EN">English</option>
                             <option value="DE">German</option>
                             <option value="NL">Dutch</option>
@@ -230,46 +233,46 @@
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="ad_content_focus" class="form-label">Content Focus</label>
-                        <input type="text" class="form-control" id="ad_content_focus" autocomplete="on">
+                        <input type="text" class="form-control auto-save" id="ad_content_focus" autocomplete="on">
                         <small class="form-text text-muted">You can use this to identify what the ad focuses on (NYNY21, etc).</small>
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row editable">
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="ad_image_name" class="form-label">Image or Video Name</label>
-                        <input type="text" class="form-control" id="ad_image_name" autocomplete="on">
+                        <input type="text" class="form-control auto-save" id="ad_image_name" autocomplete="on">
                         <small class="form-text text-muted">This identifies which image or video the ad uses. It can also be left blank.</small>
                     </div>
                 </div>
                 <div class="col-sm" id="row_video_length">
                     <div class="mb-3">
                         <label for="ad_video_length" class="form-label">Video Length (optional)</label>
-                        <input type="number" class="form-control" id="ad_video_length" autocomplete="on">
+                        <input type="number" class="form-control auto-save" id="ad_video_length" autocomplete="on">
                         <small class="form-text text-muted">The length of the video in seconds; Numbers only</small>
                     </div>
                 </div>
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="ad_copy_name" class="form-label">Copy Name</label>
-                        <input type="text" class="form-control" id="ad_copy_name" autocomplete="on">
+                        <input type="text" class="form-control auto-save" id="ad_copy_name" autocomplete="on">
                         <small class="form-text text-muted">Use this to identify the copy used in the ad.</small>
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row editable">
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="ad_destination_name" class="form-label">Destination Name</label>
-                        <input type="text" class="form-control" id="ad_destination_name" autocomplete="on">
+                        <input type="text" class="form-control auto-save" id="ad_destination_name" autocomplete="on">
                         <small class="form-text text-muted">A name for the page the ad directs to</small>
                     </div>
                 </div>
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="ad_destination_type" class="form-label">Destination Type</label>
-                        <select class="form-select" aria-label="ad_destination_type" id="ad_destination_type">
+                        <select class="form-select auto-save" aria-label="ad_destination_type" id="ad_destination_type">
                             <option value="LP">Landing Page</option>
                             <option value="PDP">Product Detail Page</option>
                             <option value="PLP">Product Listing Page</option>
@@ -279,11 +282,11 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row editable">
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="ad_tactic" class="form-label">Ad Tactic</label>
-                        <select class="form-select" aria-label="Channel Selector" id="ad_tactic">
+                        <select class="form-select auto-save" aria-label="Channel Selector" id="ad_tactic">
                             <option value="PROS">Prospecting</option>
                             <option value="RET">Retargeting</option>
                             <option value="Mixed">Mixed</option>
@@ -296,7 +299,7 @@
                 <div class="col-sm">
                     <div class="mb-3">
                         <label for="ad_note" class="form-label">Ad Note (may not be needed)</label>
-                        <input type="text" class="form-control" id="ad_note" autocomplete="on">
+                        <input type="text" class="form-control auto-save" id="ad_note" autocomplete="on">
                         <small class="form-text text-muted">Any other information you want to include (optional)</small>
                     </div>
                 </div>
@@ -311,6 +314,13 @@
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script src="js/lodash.min.js"></script>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/savy.min.js"></script>
+    <script charset="utf-8">
+      $('.auto-save').savy('load',function(){
+         console.log("All data from savy are loaded");
+      });
+    </script>
 
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
