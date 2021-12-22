@@ -100,6 +100,7 @@ function updateValue (e) {
   // Related to ad name
   let ad_content_type = formElement.elements['ad_content_type'].value
   let ad_language = formElement.elements['ad_language'].value
+  let target_country = formElement.elements['target_country'].value
   let ad_content_focus = formElement.elements['ad_content_focus'].value
   let ad_image_name = formElement.elements['ad_image_name'].value
   let ad_copy_name = formElement.elements['ad_copy_name'].value
@@ -111,19 +112,21 @@ function updateValue (e) {
 
   // Build Campaign & Ad Group
   let campaign_name_base = `${channel_raw}_${region_raw}_${platform_raw}_${tactic_raw}`
-  let name_adgroup = adgroup_name(
+  let name_adgroup_raw = adgroup_name(
     product_category_raw,
     audience_raw,
     is_experiment_raw
   )
 
-  if (name_adgroup.length > 0) {
+  if (name_adgroup_raw.length > 0) {
     // row_adgroup.hidden = false;
-    var campaign_name = `${campaign_name_base}_${name_adgroup}_C1`
-  } else if (name_adgroup.length == 0) {
+    var campaign_name = `${campaign_name_base}_${name_adgroup_raw}_C1`
+  } else if (name_adgroup_raw.length == 0) {
     // row_adgroup.hidden = true;
     var campaign_name = `${campaign_name_base}_C1`
   }
+
+  let name_adgroup = `${name_adgroup_raw}_${target_country}`
 
   // Build Ad Name
   // let ad_name_base = `${ad_content_type}_${clean(ad_content_focus)}_${clean(ad_image_name)}_${clean(ad_copy_name)}_${clean(ad_destination_name)}_${ad_destination_type}_${ad_language}_${clean(ad_note)}_YS1`
